@@ -10,11 +10,15 @@ continu à partir des données reçues par nos compteurs.
 Nous souhaitons par exemple identifier les fuites en supposant que toute consommation de
 plus de 15l / heure pendant plus de 3h d’affilée est une fuite potentielle.
 
-- [ ] Ecrire un algorithme qui détecte ce type d’événement, qui prend en entrée le jeu de donnée
+- [ ] **Task :**
+
+      Ecrire un algorithme qui détecte ce type d’événement, qui prend en entrée le jeu de donnée
       contenu dans hourly_consumption.json et qui ressort pour résultat le tableau décrit dans
       potential_leakage.json.
+
 - [ ] **Bonus 1 :**
-      Rendre cet algorithme indépendant du type de structure de donnée passé en entrée.
+        
+       Rendre cet algorithme indépendant du type de structure de donnée passé en entrée.
       Par exemple, nous devons pouvoir passer un simple tableau d’entiers (représentants ici la
       consommation) et considérer que chaque occurrence correspond à 1h.
 - [ ] **Bonus 2 :**
