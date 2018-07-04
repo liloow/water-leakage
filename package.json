@@ -1,0 +1,28 @@
+{
+  "name": "citytaps",
+  "version": "1.0.0",
+  "description": "",
+  "main": "LeakDetector.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/liloow/water-leakage.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/liloow/water-leakage/issues"
+  },
+  "homepage": "https://github.com/liloow/water-leakage#readme",
+  "devDependencies": {
+    "babel-eslint": "^8.2.5",
+    "babel-plugin-transform-object-rest-spread": "^6.26.0",
+    "eslint": "^5.0.1",
+    "eslint-config-airbnb-base": "^13.0.0",
+    "eslint-config-google": "^0.9.1",
+    "eslint-plugin-import": "^2.13.0",
+    "jest": "^23.3.0"
+  }
+}
