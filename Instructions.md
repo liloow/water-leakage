@@ -32,7 +32,6 @@ plus de 15l / heure pendant plus de 3h d’affilée est une fuite potentielle.
 > consécutives est supérieure à un seuil pendant plus de 5h.
 
 Pour répondre au test technique :
-Le code doit être envoyé sous forme de lien vers le repository GitHub ou GitLab.
-Le code doit être exécutable et la procédure pour l’exécuter doit être décrite dans le
-README du repo.
-L’utilisation de librairie telle que lodash/underscore.js est autorisée.
+`Le code doit être envoyé sous forme de lien vers le repository GitHub ou GitLab.`
+`Le code doit être exécutable et la procédure pour l’exécuter doit être décrite dans le README du repo.`
+`L’utilisation de librairie telle que lodash/underscore.js est autorisée.`
