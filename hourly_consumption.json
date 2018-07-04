@@ -1,0 +1,242 @@
+[
+  {
+    "heure": 1,
+    "jour": 1,
+    "consommation": 0
+  },
+  {
+    "heure": 2,
+    "jour": 1,
+    "consommation": 16
+  },
+  {
+    "heure": 3,
+    "jour": 1,
+    "consommation": 19
+  },
+  {
+    "heure": 4,
+    "jour": 1,
+    "consommation": 10
+  },
+  {
+    "heure": 5,
+    "jour": 1,
+    "consommation": 0
+  },
+  {
+    "heure": 6,
+    "jour": 1,
+    "consommation": 20
+  },
+  {
+    "heure": 7,
+    "jour": 1,
+    "consommation": 34
+  },
+  {
+    "heure": 8,
+    "jour": 1,
+    "consommation": 50
+  },
+  {
+    "heure": 9,
+    "jour": 1,
+    "consommation": 0
+  },
+  {
+    "heure": 10,
+    "jour": 1,
+    "consommation": 23
+  },
+  {
+    "heure": 11,
+    "jour": 1,
+    "consommation": 42
+  },
+  {
+    "heure": 12,
+    "jour": 1,
+    "consommation": 24
+  },
+  {
+    "heure": 13,
+    "jour": 1,
+    "consommation": 26
+  },
+  {
+    "heure": 14,
+    "jour": 1,
+    "consommation": 0
+  },
+  {
+    "heure": 15,
+    "jour": 1,
+    "consommation": 0
+  },
+  {
+    "heure": 16,
+    "jour": 1,
+    "consommation": 12
+  },
+  {
+    "heure": 17,
+    "jour": 1,
+    "consommation": 1
+  },
+  {
+    "heure": 18,
+    "jour": 1,
+    "consommation": 10
+  },
+  {
+    "heure": 19,
+    "jour": 1,
+    "consommation": 0
+  },
+  {
+    "heure": 20,
+    "jour": 1,
+    "consommation": 20
+  },
+  {
+    "heure": 21,
+    "jour": 1,
+    "consommation": 12
+  },
+  {
+    "heure": 22,
+    "jour": 1,
+    "consommation": 0
+  },
+  {
+    "heure": 23,
+    "jour": 1,
+    "consommation": 0
+  },
+  {
+    "heure": 24,
+    "jour": 1,
+    "consommation": 23
+  },
+  {
+    "heure": 1,
+    "jour": 1,
+    "consommation": 0
+  },
+  {
+    "heure": 2,
+    "jour": 2,
+    "consommation": 16
+  },
+  {
+    "heure": 3,
+    "jour": 2,
+    "consommation": 19
+  },
+  {
+    "heure": 4,
+    "jour": 2,
+    "consommation": 10
+  },
+  {
+    "heure": 5,
+    "jour": 2,
+    "consommation": 0
+  },
+  {
+    "heure": 6,
+    "jour": 2,
+    "consommation": 3
+  },
+  {
+    "heure": 7,
+    "jour": 2,
+    "consommation": 10
+  },
+  {
+    "heure": 8,
+    "jour": 2,
+    "consommation": 5
+  },
+  {
+    "heure": 9,
+    "jour": 2,
+    "consommation": 0
+  },
+  {
+    "heure": 10,
+    "jour": 2,
+    "consommation": 3
+  },
+  {
+    "heure": 11,
+    "jour": 2,
+    "consommation": 4
+  },
+  {
+    "heure": 12,
+    "jour": 2,
+    "consommation": 2
+  },
+  {
+    "heure": 13,
+    "jour": 2,
+    "consommation": 26
+  },
+  {
+    "heure": 14,
+    "jour": 2,
+    "consommation": 0
+  },
+  {
+    "heure": 15,
+    "jour": 2,
+    "consommation": 0
+  },
+  {
+    "heure": 16,
+    "jour": 2,
+    "consommation": 2
+  },
+  {
+    "heure": 17,
+    "jour": 2,
+    "consommation": 9
+  },
+  {
+    "heure": 18,
+    "jour": 2,
+    "consommation": 10
+  },
+  {
+    "heure": 19,
+    "jour": 2,
+    "consommation": 0
+  },
+  {
+    "heure": 20,
+    "jour": 2,
+    "consommation": 0
+  },
+  {
+    "heure": 21,
+    "jour": 2,
+    "consommation": 12
+  },
+  {
+    "heure": 22,
+    "jour": 2,
+    "consommation": 5
+  },
+  {
+    "heure": 23,
+    "jour": 2,
+    "consommation": 0
+  },
+  {
+    "heure": 24,
+    "jour": 2,
+    "consommation": 2
+  }
+]

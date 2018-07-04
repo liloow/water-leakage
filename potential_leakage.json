@@ -1,0 +1,32 @@
+[
+  [{
+    "heure": 6,
+    "jour": 1,
+    "consommation": 20
+  }, {
+    "heure": 7,
+    "jour": 1,
+    "consommation": 34
+  }, {
+    "heure": 8,
+    "jour": 1,
+    "consommation": 50
+  }],
+  [{
+    "heure": 10,
+    "jour": 1,
+    "consommation": 23
+  }, {
+    "heure": 11,
+    "jour": 1,
+    "consommation": 42
+  }, {
+    "heure": 12,
+    "jour": 1,
+    "consommation": 24
+  }, {
+    "heure": 13,
+    "jour": 1,
+    "consommation": 26
+  }]
+]
