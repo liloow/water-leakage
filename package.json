@@ -24,5 +24,8 @@
     "eslint-config-google": "^0.9.1",
     "eslint-plugin-import": "^2.13.0",
     "jest": "^23.3.0"
+  },
+  "dependencies": {
+    "csv-parse": "^2.5.0"
   }
 }

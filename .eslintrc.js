@@ -2,10 +2,9 @@ module.exports = {
   extends: 'google',
   parserOptions: {
     ecmaVersion: 8,
-    sourceType: 'script',
-    parser: 'babel-eslint',
+    sourceType: 'module',
   },
-
+  parser: 'babel-eslint',
   rules: {
     'max-len': ['error', {code: 120, ignoreComments: true}],
     'require-jsdoc': [

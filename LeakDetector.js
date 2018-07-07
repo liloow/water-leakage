@@ -8,62 +8,168 @@ function isNotIncrementingOrNaN(arr) {
   });
 }
 
-class AnomalyDetector {
-  constructor(data, dataKeyToTest, pattern, treshold, cycle, start, end) {
+function isNotIncrementingOrNaNTranslated(arr) {
+  const cache = {couldMatch: [], all: {}};
+  for (let i = 0; i < arr[0].length; i++) {
+    let array = arr.map(el => Number(el[i]));
+    if (isNotIncrementingOrNaN(arr)) cache.couldMatch.push(array);
+    cache.all[i] = array;
+  }
+  return cache;
+}
+
+class ActionRouter {
+  constructor(
+    data,
+    pattern,
+    treshold,
+    cycle,
+    dataKeyToTest = null,
+    refiner = null,
+    subset = null,
+    ...args
+  ) {
     this.args = {};
-    if ([...arguments].filter(Boolean).length === 1) {
-      this.args = {dataKeyToTest, pattern, treshold, cycle, start, end, ...data};
+    if (!pattern) {
+      this.args = {dataKeyToTest, pattern, treshold, cycle, refiner, subset, ...data};
+    } else if (typeof pattern === 'object') {
+      this.args = {dataKeyToTest, pattern, treshold, cycle, refiner, subset, data, ...pattern};
     }
-    if ([...arguments].filter(Boolean).length === 2) {
-      this.args = {pattern, treshold, cycle, start, end, data, ...dataKeyToTest};
-    }
-    console.log(this.args.dataKeyToTest);
     // MANDATORY this.ARGS
-    this.data = this.args.data || data;
+    this.dataInit = this.args.data || data;
     this.treshold = this.args.treshold || treshold;
     this.pattern = this.args.pattern || pattern;
-    this.cycle = this.args.cycle || cycle || 1;
+    this.cycle = this.args.cycle || cycle;
     // NON-MANDATORY this.ARGS
-    this.sample = [];
     this.dataKeyToTest =
       this.args.dataKeyToTest || (typeof dataKeyToTest === 'string' ? dataKeyToTest : null);
-    this.start = this.args.start || start || 0;
-    this.end = this.args.end || end || data.length || null;
+    this.refiner = this.args.refiner || refiner || 0;
+    this.subset = this.args.subset || subset;
+    // DATA MIRROR
+    this.data = this.dataInit;
+    // PRIVATE VARS
+    this.dataWithIndexOrig = [];
     this.entriesMatchingPattern = [];
     this.anomalyDetected = false;
+    this.special = null;
+    this.patternType = null;
+    this.computed = null;
+  }
+}
+
+class AnomalyDetector extends ActionRouter {
+  /* ========================================================================== */
+  /*                                 CONTEXT                                    */
+  /* ========================================================================== */
+
+  dispatchToRightTree() {
+    this.patterntype = typeof this.pattern(null, 10);
+    const tree = this.patterntype;
+    if (tree === 'boolean') return this._analyse();
+    if (tree === 'number' || tree === 'object') return this._compute();
+    throw Error('Invalid Pattern');
   }
 
   checkMandatoryArgs() {
-    console.log(this.dataKeyToTest);
-    let missing = [this.data, this.treshold, this.pattern, this.cycle].filter(arg => arg == null);
-    if (missing.length > 0)
+    let missing = ['data', 'pattern', 'treshold', 'cycle'].filter(li => this[li] == null);
+    if (missing.length > 0) {
       throw Error(
-        `Some mandatory arguments are either missing or couldn't be parsed : <${[...missing]}>`
+        `Some mandatory arguments are either missing or couldn't be parsed : <${missing}>`
       );
+    }
+  }
+
+  refine(data) {
+    if (typeof this.refiner !== 'object') {
+      throw Error(
+        `The refiner must be an Object with properties mirroring the ones to refine on the data`
+      );
+    }
+    for (let [key, value] of Object.entries(this.refiner)) {
+      if (Array.isArray(value) && value.length === 2) {
+        let min = value[0];
+        let max = value[1];
+        let parser = input => input;
+        if (value[0].slice(-1) === value[1].slice(-1) && value[0].slice(-1) === 'h') {
+          parser = input => input % 24;
+          min = Number(min.match(/[0-9]+(?=h)/g)[0]);
+          max = Number(max.match(/[0-9]+(?=h)/g)[0]);
+        }
+        this.data = data.reduce((a, b, i) => {
+          let hour = parser(b[key]);
+          if (hour > min || hour < max) a.push(b);
+          return a;
+        }, []);
+      }
+    }
+  }
+
+  /* ========================================================================== */
+  /*                                   QUANTI                                   */
+  /* ========================================================================== */
+
+  _compute() {
+    const data = this._prepareData();
+    this._calc(data);
+  }
+
+  _prepareData() {
+    if (this.refiner) this.refine(this.data);
+    if (this.subset && this.subset.end) this.data.slice(this.subset.start, this.subset.end);
+    const dataSet = this._getRelevantDataProp();
+    return dataSet;
+  }
+
+  _calc(data) {
+    const cache = {};
+    this.computed = this.pattern(cache, ...data);
+    return this.computed;
+  }
+
+  /* ========================================================================== */
+  /*                                    QUALI                                   */
+  /* ========================================================================== */
+
+  _analyse() {
+    const data = this._makeSubset();
+    this._matcher(data);
+    if (this.entriesMatchingPattern.length > 0) this.anomalyDetected = true;
+    else this.anomalyDetected = false;
+  }
+
+  _makeSubset() {
+    if (this.refiner) this.refine(this.data);
+    const dataSet = this._getRelevantDataProp();
+    this.dataWithIndexOrig = dataSet.map((el, i) => ({data: el, indexOrig: i}));
+    const filteredDataSet = this.dataWithIndexOrig
+      .slice(this.refiner, this.end || this.dataWithIndexOrig.length)
+      .filter((el, i) => i % this.cycle === 0);
+    return filteredDataSet;
   }
 
   _matcher(data) {
-    // console.log(this.pattern);
     const cache = {};
     data.forEach((el, i) => {
-      if (this.pattern(el.data)) {
+      if (this.pattern(cache, el.data)) {
         cache.indexes = [...(cache.indexes || []), i];
-        cache.entries = [...(cache.entries || []), el];
         cache.consecutive = cache.consecutive == null ? 1 : cache.consecutive + 1;
       } else {
         if (cache.consecutive >= this.treshold) {
           this.entriesMatchingPattern = [...this.entriesMatchingPattern, cache.indexes];
         }
-        Object.keys(cache).forEach(key => {
-          cache[key] = null;
-          return cache;
-        });
+        cache.indexes = [];
+        cache.consecutive = 0;
       }
     });
   }
 
+  /* ========================================================================== */
+  /*                                    QUALI                                   */
+  /* ========================================================================== */
+
+  // TODO : REFACTOR THIS MONSTER
   _getRelevantDataProp() {
-    console.log(this.dataKeyToTest);
+    // console.log(this.dataKeyToTest);
     const temp = [];
     if (typeof this.data === 'string' && this.data.split(',').every(el => !isNaN(Number(el)))) {
       return this.data.split(',');
@@ -74,7 +180,7 @@ class AnomalyDetector {
       if (typeof this.data[0] === 'string' && !this.data.some(el => isNaN(Number(el)))) {
         return this.data.map(el => Number(el));
       }
-      if (typeof this.data[0] === 'object') {
+      if (!Array.isArray(this.data[0]) && typeof this.data[0] === 'object') {
         if (this.dataKeyToTest) return this.data.map(el => el[this.dataKeyToTest]);
         for (let key of Object.keys(this.data)) {
           if (Array.isArray(this.data[key]) && isNotIncrementingOrNaN(new Set(this.data[key]))) {
@@ -86,6 +192,31 @@ class AnomalyDetector {
           ) {
             this.data[key] = this.data[key].split(',');
             temp.push(key);
+          }
+        }
+      }
+      if (Array.isArray(this.data[0])) {
+        if (
+          this.data[0].every(el => typeof el === 'string') &&
+          this.data
+            .slice(1)
+            .reduce((a, b) => {
+              a = [...a, ...b];
+              return a;
+            }, [])
+            .every(entry => !isNaN(Number(entry)))
+        ) {
+          const result = isNotIncrementingOrNaNTranslated(this.data.slice(1));
+          this.special = this.data[0].reduce((a, b, i) => {
+            a[b] = result.all[i];
+            return a;
+          }, {});
+          if (this.dataKeyToTest) {
+            const dataIndex = this.data[0].indexOf(this.dataKeyToTest);
+            return this.data.slice(1).map(el => el[dataIndex]);
+          }
+          if (result.couldMatch.length === 1) {
+            return result[0];
           }
         }
       }
@@ -112,53 +243,37 @@ class AnomalyDetector {
     );
   }
 
-  _makeSubset() {
-    const dataSet = this._getRelevantDataProp();
-    // console.log(dataSet);
-    this.sample = dataSet.map((el, i) => ({data: el, indexOrig: i}));
-    const filteredDataSet = this.sample
-      .slice(this.start, this.end || this.sample.length)
-      .filter((el, i) => i % this.cycle === 0);
-    return filteredDataSet;
-  }
-
-  _analyse() {
-    const data = this._makeSubset();
-    this._matcher(data);
-    if (this.entriesMatchingPattern.length > 0) this.anomalyDetected = true;
-    else this.anomalyDetected = false;
-  }
-
   report() {
     try {
       this.checkMandatoryArgs();
-      this._analyse();
-      console.log(this.entriesMatchingPattern);
+      this.dispatchToRightTree();
       if (this.anomalyDetected) {
         const troublesomeEntries = Array.from(this.entriesMatchingPattern, group =>
-          group.map(
-            index =>
-              Array.isArray(this.data)
-                ? this.data[index]
-                : Object.keys(this.data).reduce((a, b) => {
-                    a[b] = this.data[b][index];
-                    return a;
-                  }, {})
-          )
+          group.map(index => {
+            if (typeof this.data === 'string') return Number(this.data.split(',')[index]);
+            return Array.isArray(this.special || this.data)
+              ? this.special || this.data[index]
+              : Object.keys(this.special || this.data).reduce((a, b) => {
+                  if (this.special) a[b] = this.special[b][index];
+                  else a[b] = this.data[b][index];
+                  return a;
+                }, {});
+          })
         );
-        // console.error('ANOMALIES DETECTED');
-        // console.error(JSON.stringify(troublesomeEntries));
+        console.warn('ANOMALIES DETECTED');
         return troublesomeEntries;
       }
+      if (this.computed) return this.computed;
       return 'Everything as it should be, you can take a nap';
     } catch (e) {
-      console.error(
-        '/* ========================================================================== */'
-      );
+      // console.error(
+      //   '/* ========================================================================== */'
+      // );
       console.error(e);
-      console.error(
-        '/* ========================================================================== */'
-      );
+      // console.error(
+      //   '/* ========================================================================== */'
+      // );
+      return e;
     }
   }
 }
