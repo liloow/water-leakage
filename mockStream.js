@@ -1,7 +1,7 @@
 const request = require('request');
 const data = require('./hourly_consumption.json');
 
-(function emulateStream() {
+(() => {
   let i = 0;
   const interval = setInterval(() => {
     const options = {
@@ -23,5 +23,3 @@ const data = require('./hourly_consumption.json');
     if (i === data.length) clearInterval(interval);
   }, 10000);
 })();
-
-module.exports = emulateStream;
