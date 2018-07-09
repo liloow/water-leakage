@@ -91,6 +91,22 @@ It will listen to `POST` requests done on `http://localhost:3000` for the data. 
 
 To test the server, launch it and run `node mockStream`
 
+It is possible to configure the server to change its sensibility with :
+
+```js
+// REQUEST
+method: 'POST';
+url: 'http://localhost:3000/setSensibility';
+// DATA
+req.body = {
+    treshold: Number,
+    cycle: Number,
+    limit: Number,
+};
+```
+
+To check the current status of the server, a simple `GET` request to `http://localhost:3000` will do the trick.
+
 ## Internals
 
 ### Modules

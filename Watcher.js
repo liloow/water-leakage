@@ -28,6 +28,7 @@ class Watcher extends Report {
     this.cycle = cycle;
     this.limit = limit;
     this.refreshPattern();
+    return this.pattern.toString();
   }
 
   processStream(data) {
