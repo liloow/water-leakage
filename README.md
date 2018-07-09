@@ -128,7 +128,7 @@ The class is divided into modules :
 
 The file `test.js` is testing patterns. This is a good source for examples
 
-Test coverage is available in the `coverage` folder.
+*Test coverage is available in the `coverage` folder.*
 
 >    ✓ should return the control output >>> CASE: DATA = json + explicit key PARAMS = EXPLICIT (18ms)                                          
     ✓ should return the control output >>> CASE: DATA = json PARAMS = EXPLICIT (5ms)                                                          
