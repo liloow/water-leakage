@@ -6,7 +6,7 @@
 -   [x] Make the algorithm independant of the data structure
 -   [x] Be able to treat other events
 
-## Usage
+## Usagee
 
 **Detect leaks :**
 
@@ -18,7 +18,7 @@ api(consumH, (c, x) => x > 15, 3, 1, 'consommation').report();
 ```
 
 1.  The first argument is the `input data`
-2.  The second argument is a `function` representing the `pattern` we are looking for.
+2.  The second argument is a `function` representing the `pattern` we are looking for. **Important** : to be able to use a higher scoped cache inside the pattern statement, we use a first argument `c` referencing the cache.
 3.  The third argument is the `treshold` which represent the `number of days` necessary for an event to be reported.
 4.  The fourth argument is the `cycle` which represent the `frequency` of checking (Every how many hours we should check)
 
@@ -32,7 +32,7 @@ The function accepts data in the following form:
 const data = {
     data: Object, // Or an Array of the relevant data or a comma sepearted string of the values
     dataKeyToTest: String,
-    pattern: Function,
+    pattern: Function, // Args are (cache, [data])
     treshold: Number,
     cycle: Number,
 };
@@ -112,4 +112,3 @@ The file `test.js` is testing patterns. This is a good source for examples
 1.  `app.js` is the main express server file.
 2.  `index.js` is the instantiation of the `Watcher` class.
 3.  `mockStream.js` is a directly called function simulating a real data stream (with the interval set at 10s and not an hour).
-
