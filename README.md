@@ -6,7 +6,7 @@
 -   [x] Make the algorithm independant of the data structure
 -   [x] Be able to treat other events
 
-## Usagee
+## Usage
 
 **Detect leaks :**
 
