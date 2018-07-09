@@ -6,20 +6,25 @@
 -   [x] Make the algorithm independant of the data structure
 -   [x] Be able to treat other events
 
-## Usagee
+## Usage
 
 **Detect leaks :**
 
 ```js
+// Import data, class and add syntax sugar
+
 const consumH = require('./hourly_consumption.json');
-const Report = require('./Report');
+const Report = require('./class/Report');
 const api = (...args) => new Report(...args);
+
+// Initialize instance
+
 api(consumH, (c, x) => x > 15, 3, 1, 'consommation').report();
 ```
 
 1.  The first argument is the `input data`
 2.  The second argument is a `function` representing the `pattern` we are looking for. **Important** : to be able to use a higher scoped cache inside the pattern statement, we use a first argument `c` referencing the cache.
-3.  The third argument is the `treshold` which represent the `number of days` necessary for an event to be reported.
+3.  The third argument is the `treshold` which represent the `number of days` necessary for an event to be flagged.
 4.  The fourth argument is the `cycle` which represent the `frequency` of checking (Every how many hours we should check)
 
 **These are the mandatory arguments**
@@ -51,7 +56,7 @@ new Report(data, pattern, treshold, cycle, dataKeyToTest, refiner);
 // data can be an object or an Array of the relevant data or a comma sepearted string of the values
 ```
 
-## Extas
+## Extras
 
 ```js
 data, pattern, treshold, cycle, (dataKeyToTest = null), (refiner = null), (subset = null);
@@ -114,7 +119,7 @@ To check the current status of the server, a simple `GET` request to `http://loc
 The class is divided into modules :
 
 1.  **Report** : this is the module which parses the arguments and expose the `report` method to the user.
-2.  **DataExtractor** : this is the module where the `data` argument is checked in every way in order to extract the relevant part used by the `DataProcessing` module.
+2.  **DataExtractor** : this is the module where the `data` argument is checked in every way in order to extract the relevant part used by the `DataProcessing` module. *This module is pretty ugly but that's the price to pay if you want to match many arguments patterns*
 3.  **DataProcessing** : this is the module where the data set is checked against the pattern. It is subdivided into the two trees : `QUANTI` and `QUALI`.
 4.  **Context** : this is the module containing the generic methods and the private variables initialization used by the environment.
 5.  **Common** : this is just a wrapper.
