@@ -27,23 +27,31 @@ class DataExtractor {
   _getRelevantDataProp(data) {
     const temp = [];
     const tempArray = [];
-
+    //
     // IMPUT DATA IS OF TYPE STRING
-
+    //
     if (typeof data === 'string' && data.split(',').every(el => !isNaN(Number(el)))) {
       return data.split(',');
-    } else if (Array.isArray(data)) {
-      // IMPUT DATA IS OF TYPE ARRAY
+    } // eslint-disable-line
+    //
+    // IMPUT DATA IS OF TYPE ARRAY
+    //
+    else if (Array.isArray(data)) {
       if (data.length === 0) return [];
       if (data.every(el => typeof el === 'number')) return data;
       if (typeof data[0] === 'string' && !data.some(el => isNaN(Number(el)))) {
         this.data = data.map(el => Number(el));
         return data;
       }
+      //
+      // IMPUT DATA IS OF TYPE ARRAY OF OBJECTS
+      //
       if (!Array.isArray(data[0]) && typeof data[0] === 'object') {
         if (this.dataKeyToTest) return data.map(el => el[this.dataKeyToTest]);
         for (let key of Object.keys(data[0])) {
           if (Array.isArray(data[0][key]) && isNotIncrementingOrNaN(new Set(data[0][key]))) {
+            // new Set to make array[i] unique
+
             this.data = {};
             this.data[key] = data[0][key];
             temp.push(key);
@@ -53,6 +61,8 @@ class DataExtractor {
             if (isNotIncrementingOrNaN(new Set(arr))) tempArray.push(arr);
           }
           if (Array.isArray(data[0]) && isNotIncrementingOrNaN(new Set(data[0]))) {
+            // new Set to make array[i] unique
+
             temp.push(key);
           }
           if (
@@ -66,6 +76,9 @@ class DataExtractor {
           }
         }
       }
+      //
+      // IMPUT DATA IS OF TYPE ARRAY OF ARRAY
+      //
       if (Array.isArray(data[0])) {
         if (
           data[0].every(el => typeof el === 'string') &&
@@ -91,9 +104,11 @@ class DataExtractor {
           }
         }
       }
-    } else if (typeof data === 'object') {
-      // IMPUT DATA IS OF TYPE OBJECT
-
+    } // eslint-disable-line
+    //
+    // IMPUT DATA IS OF TYPE OBJECT
+    //
+    else if (typeof data === 'object') {
       if (this.dataKeyToTest) return data[this.dataKeyToTest];
       for (let key of Object.keys(data)) {
         if (Array.isArray(data[key]) && isNotIncrementingOrNaN(new Set(data[key]))) {

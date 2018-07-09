@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1531126138095" clover="3.2.0">
-  <project timestamp="1531126138095" name="All files">
-    <metrics statements="186" coveredstatements="181" conditionals="162" coveredconditionals="150" methods="47" coveredmethods="47" elements="395" coveredelements="378" complexity="0" loc="186" ncloc="186" packages="1" files="4" classes="4">
+<coverage generated="1531126750284" clover="3.2.0">
+  <project timestamp="1531126750285" name="All files">
+    <metrics statements="185" coveredstatements="180" conditionals="162" coveredconditionals="150" methods="47" coveredmethods="47" elements="394" coveredelements="377" complexity="0" loc="185" ncloc="185" packages="1" files="4" classes="4">
       <file name="Context.js" path="/home/tom/Code Projects/citytaps/class/Context.js">
-        <metrics statements="41" coveredstatements="41" conditionals="30" coveredconditionals="30" methods="9" coveredmethods="9"/>
+        <metrics statements="40" coveredstatements="40" conditionals="30" coveredconditionals="30" methods="9" coveredmethods="9"/>
         <line num="1" count="1" type="stmt"/>
         <line num="5" count="24" type="stmt"/>
         <line num="7" count="24" type="stmt"/>
@@ -39,12 +39,11 @@
         <line num="58" count="1" type="stmt"/>
         <line num="60" count="2" type="stmt"/>
         <line num="61" count="96" type="stmt"/>
-        <line num="62" count="96" type="stmt"/>
-        <line num="63" count="96" type="cond" truecount="5" falsecount="0"/>
-        <line num="64" count="78" type="cond" truecount="5" falsecount="0"/>
-        <line num="65" count="96" type="stmt"/>
+        <line num="62" count="96" type="cond" truecount="5" falsecount="0"/>
+        <line num="63" count="78" type="cond" truecount="5" falsecount="0"/>
+        <line num="64" count="96" type="stmt"/>
+        <line num="71" count="1" type="stmt"/>
         <line num="72" count="1" type="stmt"/>
-        <line num="73" count="1" type="stmt"/>
       </file>
       <file name="DataExtractor.js" path="/home/tom/Code Projects/citytaps/class/DataExtractor.js">
         <metrics statements="75" coveredstatements="72" conditionals="74" coveredconditionals="65" methods="23" coveredmethods="23"/>
