@@ -17,12 +17,12 @@ const api = (...args) => new Report(...args);
 api(consumH, (c, x) => x > 15, 3, 1, 'consommation').report();
 ```
 
-The first argument is the `input data`
-The second argument is a `function` representing the `pattern` we are looking for.
-The third argument is the `treshold` which represent the `number of days` necessary for an event to be reported.
-The fourth argument is the `cycle` which represent the `frequency` of checking (Every how many hours we should check)
-**These are the mandatory arguments**
-The fifth argument is an optional argument representing the `key` to look for in `data`
+1.  The first argument is the `input data`
+2.  The second argument is a `function` representing the `pattern` we are looking for.
+3.  The third argument is the `treshold` which represent the `number of days` necessary for an event to be reported.
+4.  The fourth argument is the `cycle` which represent the `frequency` of checking (Every how many hours we should check)
+    **These are the mandatory arguments**
+5.  The fifth argument is an optional argument representing the `key` to look for in `data`
 
 The function accepts data in the following form:
 
