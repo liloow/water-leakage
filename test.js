@@ -30,8 +30,6 @@ describe('Input format testing', () => {
       pattern: (c, x) => x > 15,
       treshold: 3,
       cycle: 1,
-      start: 0,
-      end: consumH.length,
     };
     const res = api(bundle).report();
     expect(res).toEqual(leaks);
