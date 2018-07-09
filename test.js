@@ -89,7 +89,7 @@ describe('Input format testing', () => {
 
   it('should not return any occurence >>> DANGER = 205L  TRESHOLD = 2', done => {
     const res = api(consumH, (c, x) => x > 205, 2, 1, 'consommation').report();
-    expect(res).toBe('Everything as it should be, you can take a nap');
+    expect(res).toBe('Everything is ok');
     done();
   });
 

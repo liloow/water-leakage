@@ -46,6 +46,7 @@ class Report extends DataProcessing {
         if (this.computed.length === 1) return this.computed[0];
         return this.computed;
       }
+      return 'Everything is ok';
     } catch (e) {
       console.error(e);
       return e;
