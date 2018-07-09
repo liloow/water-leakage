@@ -128,7 +128,7 @@ The class is divided into modules :
 
 The file `test.js` is testing patterns. This is a good source for examples
 
->>>    ✓ should return the control output >>> CASE: DATA = json + explicit key PARAMS = EXPLICIT (14ms)                                          
+>    ✓ should return the control output >>> CASE: DATA = json + explicit key PARAMS = EXPLICIT (14ms)                                          
     ✓ should return the control output >>> CASE: DATA = json PARAMS = EXPLICIT (7ms)                                                          
     ✓ should return the control output >>> CASE: DATA = BUNDLED WITH PARAMS (5ms)                                                             
     ✓ should return the control output >>> CASE: DATA = ARRAY of numbers PARAMS = EXPLICIT (2ms)                                              
