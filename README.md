@@ -84,3 +84,5 @@ It will listen to `POST` requests done on `http://localhost:3000` for the data. 
     },
 ];
 ```
+
+To test the server, launch it and run `node mockStream`
