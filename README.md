@@ -128,21 +128,29 @@ The class is divided into modules :
 
 The file `test.js` is testing patterns. This is a good source for examples
 
->    ✓ should return the control output >>> CASE: DATA = json + explicit key PARAMS = EXPLICIT (14ms)                                          
-    ✓ should return the control output >>> CASE: DATA = json PARAMS = EXPLICIT (7ms)                                                          
+>    ✓ should return the control output >>> CASE: DATA = json + explicit key PARAMS = EXPLICIT (18ms)                                          
+    ✓ should return the control output >>> CASE: DATA = json PARAMS = EXPLICIT (5ms)                                                          
     ✓ should return the control output >>> CASE: DATA = BUNDLED WITH PARAMS (5ms)                                                             
-    ✓ should return the control output >>> CASE: DATA = ARRAY of numbers PARAMS = EXPLICIT (2ms)                                              
-    ✓ should return the control output >>> CASE: DATA = OBJECT OF ARRAYS PARAMS = BUNDLE  (3ms)                                               
-    ✓ should parse the csv correctly (15ms)                                                                                                   
-    ✓ should return the control output >>> CASE: DATA = CSV PARAMS = EXPLICIT (3ms)                                                           
+    ✓ should return the control output >>> CASE: DATA = ARRAY of numbers PARAMS = EXPLICIT (3ms)                                              
+    ✓ should return the control output >>> CASE: DATA = OBJECT OF ARRAYS PARAMS = BUNDLE  (2ms)                                               
+    ✓ should return the control output >>> CASE: DATA = ARRAY OF OBJECT OF STRINGS PARAMS = BUNDLE  (3ms)                                     
+    ✓ should return the control output >>> CASE: DATA = OBJECT OF STRINGS PARAMS = BUNDLE  (2ms)                                              
+    ✓ should return the control output >>> CASE: DATA = ARRAY OBJECT OF ARRAY PARAMS = BUNDLE  (1ms)                                          
+    ✓ should return the control output >>> CASE: DATA = ARRAY OF STRINGS PARAMS = BUNDLE  (1ms)                                               
+    ✓ should parse the csv correctly (13ms)                                                                                                   
+    ✓ should return the control output >>> CASE: DATA = CSV PARAMS = EXPLICIT (2ms)                                                           
     ✓ should return the control output >>> CASE: DATA = STRING PARAMS = EXPLICIT (2ms)                                                        
     ✓ should return only one occurence >>> DANGER = 25L  TRESHOLD = 2 (1ms)                                                                   
-    ✓ should not return any occurence >>> DANGER = 205L  TRESHOLD = 2                                                                         
+    ✓ should not return any occurence >>> DANGER = 205L  TRESHOLD = 2 (1ms)                                                                   
     ✓ should return >>> DANGER = 15L  TRESHOLD = 2 DURING THE NIGHT ONLY (22h-6h) (2ms)                                                       
-    ✓ should return the average consumption >>> CASE => FULL && CYCLE = 0 (1ms)                                                               
+    ✓ should return >>> DANGER = 15L  TRESHOLD = 2 DURING THE FIRST DAY ONLY (2ms)                                                            
+    ✓ should return the average consumption >>> CASE => FULL && CYCLE = 0                                                                     
     ✓ should return the average consumption per hour >>> CASE => FULL && CYCLE = 0 (1ms)                                                      
-    ✓ should throw non-generic, non-crashing errors (34ms)                                                                                    
-    ✓ should return anomalies over 2 days and 25l >>> DANGER = 25L  CYCLE = 2 DAY (2ms) 
+    ✓ should throw non-generic, non-crashing errors (44ms)                                                                                    
+    ✓ should return anomalies over 2 hours and 25l >>> DANGER = 25L  TRESHOLD = 2 HOURS (1ms)                                                 
+    ✓ should return every time the consumption was null >>> DANGER === 0L  TRESHOLD = 1 (2ms)                                                                              
+    ✓ should return anomalies over 2 hours and 25l >>> DANGER = 25L  TRESHOLD = 2 HOURS (1ms)                                                 
+    ✓ should return every time the consumption was null >>> DANGER === 0L  TRESHOLD = 1 (1ms)                             
 
 ### Server
 
