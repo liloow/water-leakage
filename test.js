@@ -168,10 +168,29 @@ describe('Input format testing', () => {
     done();
   });
 
-  it('should return anomalies over 2 days and 25l >>> DANGER = 25L  CYCLE = 2 DAY', done => {
+  it('should return anomalies over 2 hours and 25l >>> DANGER = 25L  TRESHOLD = 2 HOURS', done => {
     const res = api(consumH, (c, x) => x > 25, 2, 1, 'consommation').report();
     expect(res).toEqual([
       [{heure: 7, jour: 1, consommation: 34}, {heure: 8, jour: 1, consommation: 50}],
+    ]);
+    done();
+  });
+
+  it('should return every time the consumption was null >>> DANGER === 0L  TRESHOLD = 1', done => {
+    const res = api(consumH, (c, x) => x === 0, 1, 1, 'consommation').report();
+    expect(res).toEqual([
+      [{consommation: 0, heure: 1, jour: 1}],
+      [{consommation: 0, heure: 5, jour: 1}],
+      [{consommation: 0, heure: 9, jour: 1}],
+      [{consommation: 0, heure: 14, jour: 1}, {consommation: 0, heure: 15, jour: 1}],
+      [{consommation: 0, heure: 19, jour: 1}],
+      [{consommation: 0, heure: 22, jour: 1}, {consommation: 0, heure: 23, jour: 1}],
+      [{consommation: 0, heure: 1, jour: 1}],
+      [{consommation: 0, heure: 5, jour: 2}],
+      [{consommation: 0, heure: 9, jour: 2}],
+      [{consommation: 0, heure: 14, jour: 2}, {consommation: 0, heure: 15, jour: 2}],
+      [{consommation: 0, heure: 19, jour: 2}, {consommation: 0, heure: 20, jour: 2}],
+      [{consommation: 0, heure: 23, jour: 2}],
     ]);
     done();
   });
