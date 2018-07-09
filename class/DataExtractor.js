@@ -1,5 +1,3 @@
-const Common = require('./Common');
-
 function isNotIncrementingOrNaN(arr) {
   const array = [...arr];
   if (array.some(el => isNaN(el))) return false;
@@ -20,7 +18,7 @@ function isNotIncrementingOrNaNTranslated(arr) {
   return cache;
 }
 
-class DataExtractor extends Common {
+class DataExtractor {
   /* ========================================================================== */
   /*                                    QUALI                                   */
   /* ========================================================================== */
