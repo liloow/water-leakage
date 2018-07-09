@@ -1,9 +1,9 @@
 const csvParse = require('csv-parse');
 const fs = require('fs');
-const AnomalyDetector = require('./LeakDetector');
+const Report = require('./Report');
 const consumH = require('./hourly_consumption.json');
 const leaks = require('./potential_leakage.json');
-const api = (...args) => new AnomalyDetector(...args);
+const api = (...args) => new Report(...args);
 
 let csv = null;
 const consommation = consumH.map(el => el.consommation);
@@ -11,13 +11,19 @@ const heure = consumH.map(el => el.heure);
 const jour = consumH.map(el => el.jour);
 
 describe('Input format testing', () => {
-  it('should return the control output >>> CASE: DATA = json PARAMS = EXPLICIT', done => {
+  it('should return the control output >>> CASE: DATA = json + explicit key PARAMS = EXPLICIT', done => {
     const res = api(consumH, (c, x) => x > 15, 3, 1, 'consommation').report();
     expect(res).toEqual(leaks);
     done();
   });
 
-  it('should return the control output >>> CASE: DATA = BUNDLE PARAMS = BUNDLE', done => {
+  it('should return the control output >>> CASE: DATA = json PARAMS = EXPLICIT', done => {
+    const res = api(consumH, (c, x) => x > 15, 3, 1).report();
+    expect(res).toEqual(leaks);
+    done();
+  });
+
+  it('should return the control output >>> CASE: DATA = BUNDLED WITH PARAMS', done => {
     const bundle = {
       data: consumH,
       dataKeyToTest: 'consommation',
@@ -32,7 +38,7 @@ describe('Input format testing', () => {
     done();
   });
 
-  it('should return the control output >>> CASE: DATA = ARRAY PARAMS = EXPLICIT', done => {
+  it('should return the control output >>> CASE: DATA = ARRAY of numbers PARAMS = EXPLICIT', done => {
     const res = api(consumH.map(el => el.consommation), (c, x) => x > 15, 3, 1, null).report();
     expect(res).toEqual(leaks.map(el => el.map(entry => entry.consommation)));
     done();
@@ -53,7 +59,7 @@ describe('Input format testing', () => {
     expect(res).toEqual(leaks);
     done();
   });
-  it('should return parse the csv', done => {
+  it('should parse the csv correctly', done => {
     const parser = csvParse((error, data) => {
       csv = data;
       expect(csv.length).not.toBe(0);
@@ -100,7 +106,7 @@ describe('Input format testing', () => {
     done();
   });
 
-  it('should return the average conssumption >>> CASE => FULL && CYCLE = 0', done => {
+  it('should return the average consumption >>> CASE => FULL && CYCLE = 0', done => {
     const res = api(
       consumH,
       (c, ...x) => x.reduce((a, b) => (a += b), 0) / x.length,
@@ -112,20 +118,41 @@ describe('Input format testing', () => {
     done();
   });
 
-  it('should return the average conssumption per hour >>> CASE => FULL && CYCLE = 0', done => {
+  it('should return the average consumption per hour >>> CASE => FULL && CYCLE = 0', done => {
     const res = api(
       consumH,
-      (c, ...x) => {
-        x.reduce((a, b) => {
-          (a += b) / length;
-        });
-      },
+      (c, ...x) => x.reduce((a, b) => (a += b)) / x.length,
       0,
       0,
       'consommation',
-      'jour'
+      {per: 'heure'}
     ).report();
-    expect(res).toEqual(10);
+    expect(res).toEqual([
+      0,
+      16,
+      19,
+      10,
+      0,
+      11.5,
+      22,
+      27.5,
+      0,
+      13,
+      23,
+      13,
+      26,
+      0,
+      0,
+      7,
+      5,
+      10,
+      0,
+      10,
+      12,
+      2.5,
+      0,
+      12.5,
+    ]);
     done();
   });
 
@@ -133,20 +160,21 @@ describe('Input format testing', () => {
     const missingArgs = api(consumH).report();
     const invalidArgs = api(1, () => 2, 3, 4).report();
     const invalidPattern = api(1, () => null, 3, 4).report();
-    const badRefiner = api(consumH, (c, x) => x > 15, 2, 1, 'consommation', 'heure').report();
+    const badRefiner = api(consumH, (c, x) => x > 15, 2, 1, 'consommation', 'boo').report();
+    const badSplit = api(consumH, (c, x) => (x = 15), 2, 1, 'consommation', {per: 'boo'}).report();
     expect(missingArgs).toBeInstanceOf(Error);
     expect(invalidArgs).toBeInstanceOf(Error);
     expect(invalidPattern).toBeInstanceOf(Error);
     expect(badRefiner).toBeInstanceOf(Error);
-
+    expect(badSplit).toBeInstanceOf(Error);
     done();
   });
 
-  // it('should return the average >>> DANGER = 25L  CYCLE = 2 DAY', done => {
-  //   const res = api(consumH, (c, x) => x > 25, 2, 1, 'consommation').report();
-  //   expect(res).toEqual([
-  //     [{heure: 7, jour: 1, consommation: 34}, {heure: 8, jour: 1, consommation: 50}],
-  //   ]);
-  //   done();
-  // });
+  it('should return anomalies over 2 days and 25l >>> DANGER = 25L  CYCLE = 2 DAY', done => {
+    const res = api(consumH, (c, x) => x > 25, 2, 1, 'consommation').report();
+    expect(res).toEqual([
+      [{heure: 7, jour: 1, consommation: 34}, {heure: 8, jour: 1, consommation: 50}],
+    ]);
+    done();
+  });
 });
