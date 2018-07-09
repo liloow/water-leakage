@@ -12,7 +12,7 @@
 
 ```js
 const consumH = require('./hourly_consumption.json');
-const Report = require('./Report');
+const Report = require('./class/Report');
 const api = (...args) => new Report(...args);
 api(consumH, (c, x) => x > 15, 3, 1, 'consommation').report();
 ```
