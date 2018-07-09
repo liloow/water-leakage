@@ -21,5 +21,6 @@ const data = require('./hourly_consumption.json');
     });
     i++;
     if (i === data.length) clearInterval(interval);
+    console.log('END OF INPUT');
   }, 10000);
 })();
