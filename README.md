@@ -11,9 +11,14 @@
 **Detect leaks :**
 
 ```js
+// Import data, class and add syntax sugar
+
 const consumH = require('./hourly_consumption.json');
 const Report = require('./class/Report');
 const api = (...args) => new Report(...args);
+
+// Initialize instance
+
 api(consumH, (c, x) => x > 15, 3, 1, 'consommation').report();
 ```
 
