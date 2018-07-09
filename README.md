@@ -115,7 +115,7 @@ req.body = {
 
 To check the current status of the server, a simple `GET` request to `http://localhost:3000` will do the trick.
 
-**Note** : We didn't have to make the server routes asynchronous since all the code we run is synchronous. Nevertheless, the error handler is already in place if the code ever needs to use asynchronous functions. You just need to call `next(error)` (error being the `Error` object). 
+**Note** : We didn't have to make all the server routes asynchronous since most of the code we run is synchronous. Nevertheless, the error handler is already in place if the code ever needs to use asynchronous functions. You just need to call `next(error)` (error being the `Error` object). 
 
 ## Internals
 
