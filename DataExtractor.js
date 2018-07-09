@@ -29,9 +29,15 @@ class DataExtractor extends Common {
   _getRelevantDataProp(data) {
     const temp = [];
     const tempArray = [];
+
+    // IMPUT DATA IS OF TYPE STRING
+
     if (typeof data === 'string' && data.split(',').every(el => !isNaN(Number(el)))) {
       return data.split(',');
     }
+
+    // IMPUT DATA IS OF TYPE ARRAY
+
     if (Array.isArray(data)) {
       if (data.length === 0) return [];
       if (data.every(el => typeof el === 'number')) return data;
@@ -78,6 +84,9 @@ class DataExtractor extends Common {
           }
         }
       }
+
+      // IMPUT DATA IS OF TYPE OBJECT
+
       if (typeof data[0] === 'object') {
         if (this.dataKeyToTest) return data[this.dataKeyToTest];
         for (let key of Object.keys(data[0])) {
