@@ -40,10 +40,10 @@ class DataProdcessing extends Context {
     const dataSet = this._getRelevantDataProp(this.data);
     this.dataWithIndexOrig = dataSet.map((el, i) => ({data: el, indexOrig: i}));
     const filteredDataSet = this.dataWithIndexOrig.filter((el, i) => i % this.cycle === 0);
-    this._matcher(filteredDataSet);
+    this._analyse(filteredDataSet);
   }
 
-  _matcher(data) {
+  _analyse(data) {
     const cache = {};
     if (this.data.length === 1) {
       if (this.pattern(cache, data[0].data)) this.currentState.push(this.data[0]);
