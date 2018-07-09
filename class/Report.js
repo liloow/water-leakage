@@ -34,7 +34,7 @@ class Report extends DataProcessing {
               ? this.special || this.data[index]
               : Object.keys(this.special || this.data).reduce((a, b) => {
                   if (this.special) a[b] = this.special[b][index];
-                  else a[b] = this.data[b][index];
+                  else a[b] = Number(this.data[b][index]);
                   return a;
                 }, {});
           })

@@ -45,7 +45,7 @@ class DataProdcessing extends Context {
 
   _analyse(data) {
     const cache = {};
-    if (this.data.length === 1) {
+    if (data.length === 1) {
       if (this.pattern(cache, data[0].data)) this.currentState.push(this.data[0]);
       else this.currentState = [];
     } else {

@@ -57,6 +57,65 @@ describe('Input format testing', () => {
     expect(res).toEqual(leaks);
     done();
   });
+
+  it('should return the control output >>> CASE: DATA = ARRAY OF OBJECT OF STRINGS PARAMS = BUNDLE ', done => {
+    const data = [
+      {
+        consommation: consommation.join(),
+      },
+    ];
+    const config = {
+      pattern: (c, x) => x > 15,
+      treshold: 3,
+      cycle: 1,
+    };
+    const res = api(data, config).report();
+    expect(res).toEqual(leaks.map(el => el.map(entry => ({consommation: entry.consommation}))));
+    done();
+  });
+
+  it('should return the control output >>> CASE: DATA = OBJECT OF STRINGS PARAMS = BUNDLE ', done => {
+    const data = {
+      consommation: consommation.join(),
+    };
+    const config = {
+      pattern: (c, x) => x > 15,
+      treshold: 3,
+      cycle: 1,
+    };
+    const res = api(data, config).report();
+    expect(res).toEqual(leaks.map(el => el.map(entry => ({consommation: entry.consommation}))));
+    done();
+  });
+
+  it('should return the control output >>> CASE: DATA = OBJECT OF ARRAY PARAMS = BUNDLE ', done => {
+    const data = [
+      {
+        consommation: consommation,
+      },
+    ];
+    const config = {
+      pattern: (c, x) => x > 15,
+      treshold: 3,
+      cycle: 1,
+    };
+    const res = api(data, config).report();
+    expect(res).toEqual(leaks.map(el => el.map(entry => ({consommation: entry.consommation}))));
+    done();
+  });
+
+  it('should return the control output >>> CASE: DATA = OBJECT OF ARRAYS PARAMS = BUNDLE ', done => {
+    const data = consommation.map(el => String(el));
+    const config = {
+      pattern: (c, x) => x > 15,
+      treshold: 3,
+      cycle: 1,
+    };
+    const res = api(data, config).report();
+    expect(res).toEqual(leaks.map(el => el.map(entry => entry.consommation)));
+    done();
+  });
+
   it('should parse the csv correctly', done => {
     const parser = csvParse((error, data) => {
       csv = data;
@@ -100,6 +159,27 @@ describe('Input format testing', () => {
     expect(res).toEqual([
       [{heure: 2, jour: 1, consommation: 16}, {heure: 3, jour: 1, consommation: 19}],
       [{heure: 2, jour: 2, consommation: 16}, {heure: 3, jour: 2, consommation: 19}],
+    ]);
+    done();
+  });
+
+  it('should return >>> DANGER = 15L  TRESHOLD = 2 DURING THE NIGHT ONLY (22h-6h)', done => {
+    const res = api(consumH, (c, x) => x > 15, 2, 1, 'consommation', {
+      jour: [1, 1],
+    }).report();
+    expect(res).toEqual([
+      [{consommation: 16, heure: 2, jour: 1}, {consommation: 19, heure: 3, jour: 1}],
+      [
+        {consommation: 20, heure: 6, jour: 1},
+        {consommation: 34, heure: 7, jour: 1},
+        {consommation: 50, heure: 8, jour: 1},
+      ],
+      [
+        {consommation: 23, heure: 10, jour: 1},
+        {consommation: 42, heure: 11, jour: 1},
+        {consommation: 24, heure: 12, jour: 1},
+        {consommation: 26, heure: 13, jour: 1},
+      ],
     ]);
     done();
   });

@@ -23,7 +23,7 @@ class Context extends DataExtractor {
     this.patterntype = typeof this.pattern({}, [10]);
     const tree = this.patterntype;
     if (tree === 'boolean') return this._computeQuali();
-    if (tree === 'number' || tree === 'object') return this._computeQuanti();
+    if (tree === 'number' || Array.isArray(tree)) return this._computeQuanti();
     throw Error('Invalid Pattern');
   }
 
@@ -44,17 +44,23 @@ class Context extends DataExtractor {
     }
     for (let [key, value] of Object.entries(this.refiner)) {
       if (Array.isArray(value) && value.length === 2) {
+        let isHour = false;
         let min = value[0];
         let max = value[1];
         let parser = input => input;
-        if (value[0].slice(-1) === value[1].slice(-1) && value[0].slice(-1) === 'h') {
+        if (
+          String(value[0]).slice(-1) === String(value[1]).slice(-1) &&
+          String(value[0]).slice(-1) === 'h'
+        ) {
+          isHour = true;
           parser = input => input % 24;
           min = Number(min.match(/[0-9]+(?=h)/g)[0]);
           max = Number(max.match(/[0-9]+(?=h)/g)[0]);
         }
         this.data = data.reduce((a, b, i) => {
-          let hour = parser(b[key]);
-          if (hour > min || hour < max) a.push(b);
+          let value = parser(b[key]);
+          if (isHour && (value >= min || value <= max)) a.push(b);
+          else if (!isHour && value >= min && value <= max) a.push(b);
           return a;
         }, []);
       }

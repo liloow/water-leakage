@@ -32,27 +32,36 @@ class DataExtractor {
 
     if (typeof data === 'string' && data.split(',').every(el => !isNaN(Number(el)))) {
       return data.split(',');
-    }
-
-    // IMPUT DATA IS OF TYPE ARRAY
-
-    if (Array.isArray(data)) {
+    } else if (Array.isArray(data)) {
+      // IMPUT DATA IS OF TYPE ARRAY
       if (data.length === 0) return [];
       if (data.every(el => typeof el === 'number')) return data;
       if (typeof data[0] === 'string' && !data.some(el => isNaN(Number(el)))) {
-        return data.map(el => Number(el));
+        this.data = data.map(el => Number(el));
+        return data;
       }
       if (!Array.isArray(data[0]) && typeof data[0] === 'object') {
         if (this.dataKeyToTest) return data.map(el => el[this.dataKeyToTest]);
-        for (let key of Object.keys(data)) {
-          if (Array.isArray(data[key]) && isNotIncrementingOrNaN(new Set(data[key]))) {
+        for (let key of Object.keys(data[0])) {
+          if (Array.isArray(data[0][key]) && isNotIncrementingOrNaN(new Set(data[0][key]))) {
+            this.data = {};
+            this.data[key] = data[0][key];
+            temp.push(key);
+          }
+          if (typeof data[0][key] === 'number') {
+            let arr = data.map(el => el[key]);
+            if (isNotIncrementingOrNaN(new Set(arr))) tempArray.push(arr);
+          }
+          if (Array.isArray(data[0]) && isNotIncrementingOrNaN(new Set(data[0]))) {
             temp.push(key);
           }
           if (
-            typeof data[key] === 'string' &&
-            data[key].split(',').every(el => !isNaN(Number(el)))
+            typeof data[0][key] === 'string' &&
+            data[0][key].split(',').every(el => !isNaN(Number(el)))
           ) {
-            data[key] = data[key].split(',');
+            this.data = {};
+            this.data[key] = data[0][key].split(',').map(el => Number(el));
+            data[0][key] = data[0][key].split(',').map(el => Number(el));
             temp.push(key);
           }
         }
@@ -82,43 +91,22 @@ class DataExtractor {
           }
         }
       }
-
+    } else if (typeof data === 'object') {
       // IMPUT DATA IS OF TYPE OBJECT
 
-      if (typeof data[0] === 'object') {
-        if (this.dataKeyToTest) return data[this.dataKeyToTest];
-        for (let key of Object.keys(data[0])) {
-          if (Array.isArray(data[0][key]) && isNotIncrementingOrNaN(new Set(data[0][key]))) {
-            temp.push(key);
-          }
-          if (
-            typeof data[key] === 'string' &&
-            data[key].split(',').every(el => !isNaN(Number(el)))
-          ) {
-            data[key] = data[key].split(',');
-            temp.push(key);
-          }
-          if (typeof data[0][key] === 'number') {
-            let arr = data.map(el => el[key]);
-            if (isNotIncrementingOrNaN(new Set(arr))) tempArray.push(arr);
-          }
-        }
-      }
-    }
-    if (typeof data === 'object') {
       if (this.dataKeyToTest) return data[this.dataKeyToTest];
       for (let key of Object.keys(data)) {
         if (Array.isArray(data[key]) && isNotIncrementingOrNaN(new Set(data[key]))) {
           temp.push(key);
         }
         if (typeof data[key] === 'string' && data[key].split(',').every(el => !isNaN(Number(el)))) {
-          data[key] = data[key].split(',');
+          this.data[key] = data[key].split(',');
           temp.push(key);
         }
       }
     }
     if (tempArray.length === 1) return tempArray[0];
-    if (temp.length === 1) return [...data[temp[0]]];
+    if (temp.length === 1) return data[temp[0]] ? [...data[temp[0]]] : [...data[0][temp[0]]];
     throw Error(
       `We couldn't find a processable data set in < ${data} >, please refine the input data`
     );
