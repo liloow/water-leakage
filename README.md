@@ -58,6 +58,7 @@ new Report(data, pattern, treshold, cycle, dataKeyToTest, refiner);
 
 ## Extras
 
+### Other things you can do
 ```js
 data, pattern, treshold, cycle, (dataKeyToTest = null), (refiner = null), (subset = null);
 ```
@@ -74,6 +75,8 @@ _An example for each case is available in the tests._
 In the normal usecase, the pattern returns a `boolean` indicating if the entry matches said pattern and the execution tree is `QUALI` (for qualitative). In addition to that, if the pattern returns a number, the tree is `QUANTI` (quantitative) and can be used to return meaningful insight (like the average consumption) on the dataset.
 
 _An example returning the aveage is available in the tests_
+
+### Continuous watching
 
 There are times where finding a leak aftewards is not the best option. Therefore, we can set a server that will listen to the api flux and report on a slack channel in realtime as soon as a leak is detected.
 To launch the server :
@@ -111,6 +114,8 @@ req.body = {
 ```
 
 To check the current status of the server, a simple `GET` request to `http://localhost:3000` will do the trick.
+
+**Note** : We didn't have to make the server routes asynchronous since all the code we run is synchronous. Nevertheless, the error handler is already in place if the code ever needs to use asynchronous functions. You just need to call `next(error)` (error being the `Error` object). 
 
 ## Internals
 
