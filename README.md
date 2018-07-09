@@ -119,11 +119,10 @@ To check the current status of the server, a simple `GET` request to `http://loc
 The class is divided into modules :
 
 1.  **Report** : this is the module which parses the arguments and expose the `report` method to the user.
-2.  **DataExtractor** : this is the module where the `data` argument is checked in every way in order to extract the relevant part used by the `DataProcessing` module. *This module is pretty ugly but that's the price to pay if you want to match many arguments patterns*
+2.  **DataExtractor** : this is the module where the `data` argument is checked in every way in order to extract the relevant part used by the `DataProcessing` module. _This module is pretty ugly but that's the price to pay if you want to match many arguments patterns_
 3.  **DataProcessing** : this is the module where the data set is checked against the pattern. It is subdivided into the two trees : `QUANTI` and `QUALI`.
 4.  **Context** : this is the module containing the generic methods and the private variables initialization used by the environment.
-5.  **Common** : this is just a wrapper.
-6.  **Watcher** : this is the module which is gonna hande the server related interactions
+5.  **Watcher** : this is the module which is gonna hande the server related interactions
 
 ### Tests
 
