@@ -88,7 +88,7 @@ describe('Input format testing', () => {
     done();
   });
 
-  it('should return the control output >>> CASE: DATA = OBJECT OF ARRAY PARAMS = BUNDLE ', done => {
+  it('should return the control output >>> CASE: DATA = ARRAY OBJECT OF ARRAY PARAMS = BUNDLE ', done => {
     const data = [
       {
         consommation: consommation,
@@ -104,7 +104,7 @@ describe('Input format testing', () => {
     done();
   });
 
-  it('should return the control output >>> CASE: DATA = OBJECT OF ARRAYS PARAMS = BUNDLE ', done => {
+  it('should return the control output >>> CASE: DATA = ARRAY OF STRINGS PARAMS = BUNDLE ', done => {
     const data = consommation.map(el => String(el));
     const config = {
       pattern: (c, x) => x > 15,
@@ -163,7 +163,7 @@ describe('Input format testing', () => {
     done();
   });
 
-  it('should return >>> DANGER = 15L  TRESHOLD = 2 DURING THE NIGHT ONLY (22h-6h)', done => {
+  it('should return >>> DANGER = 15L  TRESHOLD = 2 DURING THE FIRST DAY ONLY', done => {
     const res = api(consumH, (c, x) => x > 15, 2, 1, 'consommation', {
       jour: [1, 1],
     }).report();
@@ -188,8 +188,8 @@ describe('Input format testing', () => {
     const res = api(
       consumH,
       (c, ...x) => x.reduce((a, b) => (a += b), 0) / x.length,
-      2,
-      1,
+      0,
+      0,
       'consommation'
     ).report();
     expect(res).toEqual(10);

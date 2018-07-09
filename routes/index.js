@@ -4,8 +4,7 @@ const watcher = require('../index');
 
 router.post('/', function(req, res, next) {
   const data = req.body;
-  let result = watcher.processStream(data);
-  return res.json(result);
+  watcher.processStream(data, (err, result) => res.json(result));
 });
 
 router.post('/', function(req, res, next) {

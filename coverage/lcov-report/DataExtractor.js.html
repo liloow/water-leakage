@@ -176,7 +176,22 @@
 <a name='L128'></a><a href='#L128'>128</a>
 <a name='L129'></a><a href='#L129'>129</a>
 <a name='L130'></a><a href='#L130'>130</a>
-<a name='L131'></a><a href='#L131'>131</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L131'></a><a href='#L131'>131</a>
+<a name='L132'></a><a href='#L132'>132</a>
+<a name='L133'></a><a href='#L133'>133</a>
+<a name='L134'></a><a href='#L134'>134</a>
+<a name='L135'></a><a href='#L135'>135</a>
+<a name='L136'></a><a href='#L136'>136</a>
+<a name='L137'></a><a href='#L137'>137</a>
+<a name='L138'></a><a href='#L138'>138</a>
+<a name='L139'></a><a href='#L139'>139</a>
+<a name='L140'></a><a href='#L140'>140</a>
+<a name='L141'></a><a href='#L141'>141</a>
+<a name='L142'></a><a href='#L142'>142</a>
+<a name='L143'></a><a href='#L143'>143</a>
+<a name='L144'></a><a href='#L144'>144</a>
+<a name='L145'></a><a href='#L145'>145</a>
+<a name='L146'></a><a href='#L146'>146</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">10x</span>
 <span class="cline-any cline-yes">109x</span>
 <span class="cline-any cline-yes">7x</span>
@@ -210,18 +225,26 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">48x</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">42x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">42x</span>
 <span class="cline-any cline-yes">39x</span>
 <span class="cline-any cline-yes">86x</span>
 <span class="cline-any cline-yes">48x</span>
 <span class="cline-any cline-yes">48x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">37x</span>
 <span class="cline-any cline-yes">427x</span>
 <span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
@@ -231,6 +254,8 @@
 <span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">5x</span>
@@ -241,6 +266,9 @@
 <span class="cline-any cline-yes">48x</span>
 <span class="cline-any cline-yes">48x</span>
 <span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -269,9 +297,11 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">3x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">4x</span>
@@ -335,23 +365,31 @@ class DataExtractor {
   _getRelevantDataProp(data) {
     const temp = [];
     const tempArray = [];
-&nbsp;
+    //
     // IMPUT DATA IS OF TYPE STRING
-&nbsp;
+    //
     if (typeof data === 'string' &amp;&amp; data.split(',').every(el =&gt; !isNaN(Number(el)))) {
       return data.split(',');
-    } else if (Array.isArray(data)) {
-      // IMPUT DATA IS OF TYPE ARRAY
+    } // eslint-disable-line
+    //
+    // IMPUT DATA IS OF TYPE ARRAY
+    //
+    else if (Array.isArray(data)) {
       <span class="missing-if-branch" title="if path not taken" >I</span>if (data.length === 0) <span class="cstat-no" title="statement not covered" >return [];</span>
       if (data.every(el =&gt; typeof el === 'number')) return data;
       if (typeof data[0] === 'string' &amp;&amp; !data.some(el =&gt; isNaN(Number(el)))) {
         this.data = data.map(el =&gt; Number(el));
         return data;
       }
+      //
+      // IMPUT DATA IS OF TYPE ARRAY OF OBJECTS
+      //
       if (!Array.isArray(data[0]) &amp;&amp; typeof data[0] === 'object') {
         if (this.dataKeyToTest) return data.map(el =&gt; el[this.dataKeyToTest]);
         for (let key of Object.keys(data[0])) {
           if (Array.isArray(data[0][key]) &amp;&amp; isNotIncrementingOrNaN(new Set(data[0][key]))) {
+            // new Set to make array[i] unique
+&nbsp;
             this.data = {};
             this.data[key] = data[0][key];
             temp.push(key);
@@ -361,6 +399,8 @@ class DataExtractor {
             if (isNotIncrementingOrNaN(new Set(arr))) tempArray.push(arr);
           }
           <span class="missing-if-branch" title="if path not taken" >I</span>if (Array.isArray(data[0]) &amp;&amp; <span class="branch-1 cbranch-no" title="branch not covered" >isNotIncrementingOrNaN(new Set(data[0])))</span> {
+            // new Set to make array[i] unique
+&nbsp;
 <span class="cstat-no" title="statement not covered" >            temp.push(key);</span>
           }
           if (
@@ -374,6 +414,9 @@ class DataExtractor {
           }
         }
       }
+      //
+      // IMPUT DATA IS OF TYPE ARRAY OF ARRAY
+      //
       if (Array.isArray(data[0])) {
         <span class="missing-if-branch" title="else path not taken" >E</span>if (
           data[0].every(el =&gt; typeof el === 'string') &amp;&amp;
@@ -399,9 +442,11 @@ class DataExtractor {
           }
         }
       }
-    } else if (typeof data === 'object') {
-      // IMPUT DATA IS OF TYPE OBJECT
-&nbsp;
+    } // eslint-disable-line
+    //
+    // IMPUT DATA IS OF TYPE OBJECT
+    //
+    else if (typeof data === 'object') {
       <span class="missing-if-branch" title="if path not taken" >I</span>if (this.dataKeyToTest) <span class="cstat-no" title="statement not covered" >return data[this.dataKeyToTest];</span>
       for (let key of Object.keys(data)) {
         if (Array.isArray(data[key]) &amp;&amp; isNotIncrementingOrNaN(new Set(data[key]))) {
@@ -442,7 +487,7 @@ module.exports.default = DataExtractor;
 </div><!-- /wrapper -->
 <div class='footer quiet pad2 space-top1 center small'>
   Code coverage
-  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Mon Jul 09 2018 10:59:10 GMT+0200 (Central European Summer Time)
+  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Mon Jul 09 2018 11:11:37 GMT+0200 (Central European Summer Time)
 </div>
 </div>
 <script src="prettify.js"></script>

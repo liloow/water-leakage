@@ -20,7 +20,9 @@ const data = require('./hourly_consumption.json');
       console.log(body);
     });
     i++;
-    if (i === data.length) clearInterval(interval);
-    console.log('END OF INPUT');
+    if (i === data.length) {
+      clearInterval(interval);
+      console.log('END OF INPUT');
+    }
   }, 10000);
 })();
