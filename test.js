@@ -1,6 +1,6 @@
 const csvParse = require('csv-parse');
 const fs = require('fs');
-const Report = require('./Report');
+const Report = require('./class/Report');
 const consumH = require('./hourly_consumption.json');
 const leaks = require('./potential_leakage.json');
 const api = (...args) => new Report(...args);
