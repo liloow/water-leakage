@@ -62,6 +62,7 @@ This is the full list of arguments you can pass to the class:
 The `refiner` is an `object` used to refine the data in order to pick only a portion we want. It is contructed as such: `{key: value}`
 
 The `key` can either be `per` which is a special value allowing us to repack the data by `value` (thus the key must exist on the data object ) or `The refiner must be an Object with properties mirroring the ones to refine on the data` meaning that the `key` must also exist on the data object but this time, `value` is an `Array` with `[SubstetStart, SubsetEnd]`
+**Quick Note**: if the data to be refined is in hours: set the `[SubstetStart, SubsetEnd]` with an `h` => `[8h, 15h]`.
 
 _An example for each case is available in the tests._
 
